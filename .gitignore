@@ -1,0 +1,61 @@
+# 虚拟环境
+.venv/
+
+# Python 缓存
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# 运行时产物（不入库）
+chroma_db/
+chroma_db_corrupted_backup/
+chroma_eval/
+.kb_version
+# 已入库文档副本（带 hash 前缀，入库流程自动生成）；docs/screenshots/ 存放 README 截图，需要提交
+docs/*
+!docs/screenshots/
+logs/
+*.log
+chat_history.db
+eval_experiments.json
+# config.yaml：本地模型配置（含厂商/base_url 等本地环境信息，不入库）
+config.yaml
+
+# 本地模型权重（体积大，不入库；下载方式见 README）
+models/
+
+# Docker 运行时与离线部署包产物（Ollama 模型约 6GB、镜像 tar 数 GB，不入库）
+docker_data/
+docker_deploy/
+
+# 敏感配置
+.env
+.env.*
+!.env.example
+# Streamlit 官方密钥文件（主题配置 config.toml 可入库，secrets 绝不入库）
+.streamlit/secrets.toml
+# 个人 API Key（BYOK：每个使用者在模型设置页填写，仅存本机，不入库）
+user_settings.local.json
+
+# 临时探针 / 调试脚本（本地排查用，不入库）
+_probe_consistency.py
+*.bak
+*.backup
+*.orig
+~$*
+
+# 个人项目进度记事本
+项目进度记事本.md
+
+# IDE
+.vscode/
+.idea/
+.trae/
+
+# Git 历史备份（本地重建历史时生成，不入库）
+.git_backup_*/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+*.tmp

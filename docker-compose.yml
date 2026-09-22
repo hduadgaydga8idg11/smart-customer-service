@@ -1,0 +1,101 @@
+# =========================================================
+# 智能客服 Agent「小智」— Docker Compose 编排（本地 Ollama 全栈）
+#
+# 两种运行模式：
+#   本地全栈（默认，目标机无需预装 Ollama，首次自动拉模型）：
+#     docker compose up -d --build
+#   云端 API 模式（叠加 cloud override，不起 Ollama）：
+#     docker compose -f docker-compose.yml -f docker-compose.cloud.yml up -d --build
+#
+# 所有持久化数据均为 bind mount，整个目录拷贝到别的电脑即可迁移：
+#   docker_data/ollama      Ollama 模型（qwen2.5:1.5b + bge-m3，约 2GB）
+#   config.yaml             模型配置（聊天走 API / 嵌入走本地 bge-m3）
+#   chat_history.db         会话库
+#   chroma_db/              Chroma 向量知识库（已入库的 FAQ 文档）
+#   models/                 本地 Rerank 权重（bge-reranker，约 1GB）
+#   docs/                   已入库文档原件副本
+# =========================================================
+services:
+  # ---------------- 应用 ----------------
+  app:
+    build:
+      context: .
+      args:
+        # 国内构建默认走清华 pip 镜像；海外构建可在 .env 中覆盖：
+        # PIP_INDEX_URL=https://pypi.org/simple
+        PIP_INDEX_URL: ${PIP_INDEX_URL:-https://pypi.tuna.tsinghua.edu.cn/simple}
+    image: rag-cs-agent:latest
+    container_name: smart-cs-bot
+    ports:
+      - "8501:8501"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - HF_ENDPOINT=https://hf-mirror.com
+      - CHAT_DB_FILE=/app/persistent/chat_history.db
+      - MODEL_CONFIG_PATH=/app/persistent/config.yaml
+    # API Key 从项目根 .env 注入（不进镜像、不进 compose 文件）；
+    # 文件不存在时跳过（本地 Ollama 模式无需 .env）
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./chroma_db:/app/chroma_db
+      - ./models:/app/models
+      - ./docs:/app/docs
+      - ./logs:/app/logs
+      - ./config.yaml:/app/persistent/config.yaml
+      - ./chat_history.db:/app/persistent/chat_history.db
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ---------------- Ollama 服务 ----------------
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      # bind mount 而非命名卷：模型文件随项目目录一起拷贝，离线迁移零成本
+      - ./docker_data/ollama:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    # NVIDIA GPU 直通（需宿主机安装 nvidia-container-toolkit，可显著加速 7B 推理）：
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  # ---------------- 一次性初始化：幂等拉取模型 ----------------
+  ollama-init:
+    image: ollama/ollama:latest
+    container_name: ollama-init
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    entrypoint: ["/bin/sh", "-c"]
+    # compose 中 $$ 转义后，容器内按 shell 变量 $m 解析
+    command:
+      - |
+        set -e
+        for m in qwen2.5:1.5b bge-m3; do
+          if ollama list | grep -q "$$m"; then
+            echo "模型已存在，跳过：$$m"
+          else
+            echo "开始拉取模型：$$m（首次约数 GB，请耐心等待）"
+            ollama pull "$$m"
+          fi
+        done
+        echo "全部模型准备完成"
+    restart: "no"

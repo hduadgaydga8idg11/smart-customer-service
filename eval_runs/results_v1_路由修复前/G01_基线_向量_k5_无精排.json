@@ -1,0 +1,1678 @@
+{
+ "config": {
+  "name": "G01_基线_向量_k5_无精排",
+  "mode": "向量检索",
+  "top_k": 5,
+  "rerank": false,
+  "rerank_k": 10,
+  "fallback_on": false,
+  "fallback_th": 0.4,
+  "threshold": 0.0
+ },
+ "records": [
+  {
+   "sid": "01",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "查订单",
+    "intent_actual": "查订单",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": true,
+    "tool_detail": "Function Calling 提取参数 {'order_id': ''}；工具调用（查订单）：参数不足（order_id 缺失），主动澄清",
+    "reject_ok": null,
+    "latency": 0.64,
+    "answer": "好的，我来帮您查询订单。请提供您的订单号（演示环境可试用：2024001、2024002、2024003）。",
+    "route_note": "Function Calling 提取参数 {'order_id': ''}；工具调用（查订单）：参数不足（order_id 缺失），主动澄清",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 7.0,
+    "faithfulness": 4.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "02",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 4.25,
+    "answer": "退货流程如下：\n- 在“我的订单”中选择对应订单，点击“申请退货”；\n- 填写退货原因并上传相关凭证；\n- 审核通过后，按短信提示将商品寄回；\n- 仓库验收合格后，1-3个工作日内原路退款。\n\n另外，7天无理由退货需在商品签收之日起7天内提交申请，且商品完好、配件齐全、包装无破损；定制类、贴身佩戴类商品及已激活的软件服务不适用无理由退货。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "怎么申请退货？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 5.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "03",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 3.98,
+    "answer": "耳机整机保修 1 年，充电盒、充电线等配件保修 6 个月，保修期自签收次日起算，以订单记录为准。\n\n另外提醒一下，人为进水、摔落变形、私自拆机、非官方渠道维修以及外观正常磨损，都不在免费保修范围内。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "耳机保修多久？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 7.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "04",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 4.04,
+    "answer": "下单时在“发票信息”里选择电子普票或纸质专票：\n\n- 电子普票：支付后 1 个工作日内发送至预留邮箱，也可在订单详情页自行下载。\n- 纸质专票：仅限企业用户，需提供营业执照和开票信息，确认后 5 个工作日内单独寄出，免运费。\n\n发票内容默认开具“智能硬件设备”明细，按实际购买商品分行列出，不支持开“办公用品”“礼品”等汇总类目。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "怎么开发票？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "05",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 4.09,
+    "answer": "现货商品付款后 48 小时内发货，每日 16:00 前付款的订单力争当日发出；预售商品按商品详情页标注时间发货，一般不超过 30 天，法定节假日顺延。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "订单付款后多久能发货？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "06",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": false,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "日常闲聊",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 0.99,
+    "answer": "你好呀～人工客服的话，建议你直接在这里把问题告诉我，我可以帮你查询知识库或者办理相关业务哦。如果确实需要转人工，你把具体问题说一下，我帮你看看怎么处理最方便～",
+    "route_note": "直接回复",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 2.0,
+    "faithfulness": 7.0,
+    "retrieval_relevance": 0.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "07",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.59,
+    "answer": "电子保修卡在购买后自动生成，无需另行开具纸质发票即可享受保修服务。查询路径：App-我的-保修卡。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "保修凭证在哪里查询？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "08",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.6,
+    "answer": "商品签收后 7 天内，如果同规格商品在官方旗舰店降价，可以申请差价退还，差价会以优惠券形式返还。大促秒杀、限量特价商品不参与价保。目前资料里没有具体的申请入口和操作步骤说明，我帮您转接人工客服确认一下。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "价保怎么申请？"
+   },
+   "judge": {
+    "relevance": 9.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "09",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 2.18,
+    "answer": "升级中断导致黑屏或无法开机，可以按以下步骤处理：\n- 长按电源键 15 秒强制重启；\n- 若无效，在 App 中重新刷入固件包；\n- 仍无法恢复的，15 天内可换新，保修期内免费维修。\n\n另外提醒一下，下次升级前请确保设备电量 50% 以上、手机保持在设备旁 1 米内、网络稳定，全程约 5-10 分钟，切勿中途关闭蓝牙。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "升级固件失败导致设备变砖了怎么办？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "10",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.967,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 2.02,
+    "answer": "钻石会员的权益包括：\n- 全场 92 折\n- 专属客服通道\n- 免费延保 3 个月\n- 每年 2 次免运费上门取件\n\n累计消费满 2999 元即可成为钻石会员，等级每年 1 月 1 日按上一年度实际消费重新评定，退货金额不计入消费累计。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "钻石会员有什么权益？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "11",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.86,
+    "answer": "过保产品可以申请付费维修，费用包括：\n- 检测费：30元\n- 维修费：根据具体故障报价，报价需经您确认后再维修\n\n确认报价后，一般5-7个工作日内完成维修并回寄。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "过保之后维修怎么收费？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "12",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.76,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.84,
+    "answer": "物流丢件可以申请补偿，金额是 20-100 元不等的优惠券，具体金额需要客服根据实际情况核实后确定。如果属于重大服务事故，还可以升级为专人跟进处理。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "快递把件丢了能赔我多少？"
+   },
+   "judge": {
+    "relevance": 8.0,
+    "faithfulness": 9.0,
+    "retrieval_relevance": 9.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "13",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 2.07,
+    "answer": "退款到账时间取决于您的支付方式：\n\n- 微信/支付宝支付：原路退回，1-3 个工作日到账\n- 银行卡支付：3-7 个工作日到账\n- 花呗分期：退款优先冲抵剩余账单，已出账单的手续费不退\n\n如果超过 7 个工作日仍未到账，请联系客服并提供退款单号，我们帮您核查。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "退款多久能到账？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "14",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.64,
+    "answer": "质量问题退货（签收后15日内非人为性能故障）的退货运费由公司承担，申请时需提供故障照片或视频以便审核。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "质量问题退货运费由谁承担？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "15",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.722,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.86,
+    "answer": "因公司原因导致发货超时（超 72 小时未发货），可申请 20-100 元不等的优惠券补偿；如果是重大服务事故，可升级为专人跟进。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "发货超时了能赔多少？"
+   },
+   "judge": {
+    "relevance": 8.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "16",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 2.5,
+    "answer": "拒收后商品退回仓库，质检无误后会在 3 个工作日内原路退款，退货运费由您承担（质量问题除外）。\n\n退款到账时间取决于支付方式：\n- 微信/支付宝：1-3 个工作日\n- 银行卡：3-7 个工作日\n- 花呗分期：优先冲抵剩余账单，已出账单手续费不退\n\n如果超过 7 个工作日仍未到账，可以联系客服并提供退款单号核查。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "我拒收的包裹退款什么时候到账？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "17",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.95,
+    "answer": "不能。发票默认开具“智能硬件设备”明细，按实际购买商品分行列出，不支持开具“办公用品”“礼品”等汇总类目。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "发票能开成\"办公用品\"吗？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "18",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.98,
+    "answer": "订单完成后 30 天内，可以联系人工客服换开一次发票抬头（普票可换专票）；超过 30 天就无法换开了。订单完成前则可以随时修改抬头。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "发票已经开了还能改抬头吗？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "19",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.92,
+    "answer": "7天无理由退货主要有这些限制：\n\n- 时间：自签收之日起7天内提交申请，例如1号签收最晚8号前申请。\n- 商品状态：需不影响二次销售，商品完好、配件齐全、包装无破损；已拆封但未实际使用、配件齐全且包装完好的，一般可申请，最终以仓库验收结果为准。\n- 不适用商品：定制类商品、贴身佩戴类商品（如入耳式耳机）、已激活的软件服务，不在7天无理由退货范围内。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "7天无理由退货有什么限制？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "20",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.818,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.82,
+    "answer": "符合的，我们所有商品都严格遵守国家三包政策：\n- 7天无理由退货\n- 15天换货\n- 整机1年保修\n\n具体执行标准以《消费者权益保护法》为准。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "你们的商品符合三包规定吗？"
+   },
+   "judge": {
+    "relevance": 9.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "21",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.941,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 2.92,
+    "answer": "入耳式耳机属于贴身佩戴类商品，不在7天无理由退货范围内，所以佩戴一天后不能按无理由退货。\n\n但如果经确认属于非人为性能故障，可以在签收后15天内申请质量问题退货，这类退货运费由公司承担。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "入耳式耳机佩戴一天后能否退货？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 5.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "22",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.97,
+    "answer": "快递柜、驿站、门卫代收均视为有效签收，等同于本人签收。如果取件时发现包裹异常，请当场拍照并联系快递员与客服。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "快递柜签收是否视为本人签收？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "23",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.9,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.81,
+    "answer": "已发货订单无法修改收货地址。您可以联系客服尝试拦截转寄，转寄产生的运费由买家承担，同城转寄免费。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "订单已经发货了还能修改收货地址吗？"
+   },
+   "judge": {
+    "relevance": 8.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 9.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "24",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.75,
+    "answer": "7天无理由退货是从商品签收之日起算的。比如1号签收，最晚要在8号前提交退货申请。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "7天无理由退货是从哪天开始计算的？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "25",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.952,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.79,
+    "answer": "已拆封但未实际使用、配件齐全且包装完好的情况下，一般可以申请7天无理由退货，最终以仓库验收结果为准。\n\n需要注意：\n- 需在签收之日起7天内提交申请，商品完好、配件齐全、包装无破损。\n- 定制类商品、贴身佩戴类商品（如入耳式耳机）以及已激活的软件服务，不适用7天无理由退货。\n\n如果不确定是否符合条件，可以先在订单页提交申请，由仓库按验收结果判定。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "包装拆了但没用过还能退货吗？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 9.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "26",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.625,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.78,
+    "answer": "目前资料里没找到优惠券过期补发的说明，只提到优惠券过期会自动失效、不找零不兑现。这块我帮您转接人工客服确认一下。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "过期的优惠券可以补发吗？"
+   },
+   "judge": {
+    "relevance": 5.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 6.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "27",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "查订单",
+    "intent_actual": "查订单",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": true,
+    "tool_detail": "Function Calling 提取参数 {'order_id': '2024001'}；工具调用（查订单）：query_order_status(2024001) → 成功",
+    "reject_ok": null,
+    "latency": 0.55,
+    "answer": "已为您查到订单 2024001 的最新状态：\n\n- **商品**：无线蓝牙耳机\n- **状态**：已发货\n- **物流**：顺丰速运（单号 SF1234567890）\n- **时效**：预计明天下午送达\n\n还有其他需要帮忙的吗？\n\n⚠️ *演示数据：以上订单信息为功能演示，非真实订单。*",
+    "route_note": "Function Calling 提取参数 {'order_id': '2024001'}；工具调用（查订单）：query_order_status(2024001) → 成功",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 5.0,
+    "faithfulness": 1.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "28",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "创建工单",
+    "intent_actual": "创建工单",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": true,
+    "tool_detail": "Function Calling 提取参数 {'issue': '用户投诉耳机存在严重质量问题，要求马上处理。', 'priority': 'P1'}；工具调用（建工单）：create_ticket(priority=P1) → 成功",
+    "reject_ok": null,
+    "latency": 0.53,
+    "answer": "非常抱歉给您带来了不好的体验，您的情况我已加急登记：\n\n- **工单号**：GD20260920010852\n- **优先级**：P1（24 小时内人工跟进）\n- **创建时间**：2026-09-20 01:08:52\n\n专属客服会优先处理您的工单，请您保持电话畅通，我们会第一时间与您联系。\n您可以在工单页面凭工单号查询处理进度。\n\n⚠️ *演示模式：工单未真实提交，仅供功能演示。*",
+    "route_note": "Function Calling 提取参数 {'issue': '用户投诉耳机存在严重质量问题，要求马上处理。', 'priority': 'P1'}；工具调用（建工单）：create_ticket(priority=P1) → 成功",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 7.0,
+    "faithfulness": 6.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "29",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "日常闲聊",
+    "intent_actual": "日常闲聊",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.19,
+    "answer": "你好呀～听到你心情不错，我也跟着开心起来了！😊 有什么想聊的或者需要帮忙的，随时跟我说哦～",
+    "route_note": "直接回复",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 7.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "30",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.81,
+    "answer": "耳机进水后请立即关机、擦干，放在通风处静置48小时，期间不要充电，也不要用吹风机加热，之后联系客服检测。\n\n需要提醒的是，人为进水（超出防水等级使用）不在免费保修范围内。如果确认是人为进水，可以申请付费维修，检测费30元，维修费按故障报价收取。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "耳机进水了怎么办"
+   },
+   "judge": {
+    "relevance": 8.0,
+    "faithfulness": 7.0,
+    "retrieval_relevance": 6.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "31",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "查订单",
+    "intent_actual": "查订单",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": true,
+    "tool_detail": "Function Calling 提取参数 {'order_id': ''}；工具调用（查订单）：参数不足（order_id 缺失），主动澄清",
+    "reject_ok": null,
+    "latency": 0.54,
+    "answer": "好的，我来帮您查询订单。请提供您的订单号（演示环境可试用：2024001、2024002、2024003）。",
+    "route_note": "Function Calling 提取参数 {'order_id': ''}；工具调用（查订单）：参数不足（order_id 缺失），主动澄清",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 7.0,
+    "faithfulness": 4.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "32",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.94,
+    "answer": "退款到账时间取决于您的支付方式：\n\n- 微信、支付宝支付：原路退回，1-3 个工作日到账\n- 银行卡支付：3-7 个工作日到账\n- 花呗分期：退款优先冲抵剩余账单，已出账单的手续费不退\n\n如果超过 7 个工作日仍未到账，可以联系客服并提供退款单号核查。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "退款多久能到账？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "33",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.643,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 2.28,
+    "answer": "花呗分期支持 3/6/12 期，但资料里没有说明 12 期手续费或利息的具体计算方式，这块我帮您转接人工客服确认一下。\n\n另外补充两点资料里有的信息：\n- 花呗分期退款时优先冲抵剩余账单，已出账单的手续费不退。\n- 退款到账方面，花呗分期按上述规则处理，超过 7 个工作日未到账可联系客服提供退款单号核查。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "花呗分12期的手续费或利息怎么计算？"
+   },
+   "judge": {
+    "relevance": 7.0,
+    "faithfulness": 5.0,
+    "retrieval_relevance": 3.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "34",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.46,
+    "answer": "耳机整机保修 1 年，充电盒、充电线等配件保修 6 个月，保修期自签收次日起算，以订单记录为准。另外，人为进水、摔落变形、私自拆机、非官方渠道维修及外观正常磨损不在免费保修范围内。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "耳机保修多久？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 8.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "35",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.833,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 2.0,
+    "answer": "充电盒属于配件，保修期是 6 个月，自签收次日起算，以订单记录为准。如果是在保修期内且非人为损坏，可以享受保修；人为进水、摔落变形、私自拆机、非官方渠道维修或外观正常磨损不在免费保修范围内。保修时无需纸质发票，可在\"App-我的-保修卡\"查看电子保修卡。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "充电盒单独坏了能保修吗？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 6.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "36",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.842,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 2.28,
+    "answer": "能否修改要看订单当前状态：\n\n- 订单状态为“待发货”时，可以在订单详情页自行修改地址，仅限一次。\n- 已发货订单无法修改地址，可以联系客服尝试拦截转寄，转寄产生的运费由买家承担（同城转寄免费）。\n\n您可以在“我的订单”里查看当前状态，如果是待发货直接改就行；如果已发货，告诉我订单号，我帮您看能否拦截转寄。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "我的订单还没收到，能修改收货地址吗？"
+   },
+   "judge": {
+    "relevance": 8.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 8.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "37",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": false,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "日常闲聊",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": true,
+    "latency": 1.28,
+    "answer": "你好呀～这个问题我这边不太清楚呢，建议你直接提出想咨询的业务问题，我来帮你查询或办理哦！",
+    "route_note": "直接回复",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 4.0,
+    "faithfulness": 8.0,
+    "retrieval_relevance": 0.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "38",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "日常闲聊",
+    "intent_actual": "日常闲聊",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": true,
+    "latency": 1.09,
+    "answer": "哈哈，这个真没有～我们目前只在地球营业哦。有什么我能帮您查询或办理的吗？",
+    "route_note": "直接回复",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "39",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.1,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": true,
+    "latency": 1.82,
+    "answer": "目前资料里没找到 iPhone 15 的价格信息，我帮您转接人工客服确认一下。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "iPhone 15多少钱？"
+   },
+   "judge": {
+    "relevance": 4.0,
+    "faithfulness": 7.0,
+    "retrieval_relevance": 0.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "40",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": true,
+    "latency": 2.03,
+    "answer": "目前资料里没找到这块说明，我帮您转接人工客服确认一下。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "什么是区块链？"
+   },
+   "judge": {
+    "relevance": 5.0,
+    "faithfulness": 7.0,
+    "retrieval_relevance": 0.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "41",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "日常闲聊",
+    "intent_actual": "日常闲聊",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.54,
+    "answer": "听到你这么说，我很担心你。你愿意多跟我说说吗？如果现在很难受，可以拨打心理援助热线 400-161-9995，那边有专业的人陪你说说话。",
+    "route_note": "直接回复",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 9.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "42",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": false,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "日常闲聊",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.41,
+    "answer": "您好呀～关于具体的优惠金额，我这边确实没法直接给您答复，怕说错了误导您。您把想咨询的业务或产品告诉我，我帮您查一下知识库，或者引导您办理，这样更准确～",
+    "route_note": "直接回复",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 3.0,
+    "faithfulness": 9.0,
+    "retrieval_relevance": 0.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "43",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": false,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "创建工单",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 0.72,
+    "answer": "非常抱歉给您带来了不好的体验，您的情况我已加急登记：\n\n- **工单号**：GD20260920010945\n- **优先级**：P1（24 小时内人工跟进）\n- **创建时间**：2026-09-20 01:09:45\n\n专属客服会优先处理您的工单，请您保持电话畅通，我们会第一时间与您联系。\n您可以在工单页面凭工单号查询处理进度。\n\n⚠️ *演示模式：工单未真实提交，仅供功能演示。*",
+    "route_note": "Function Calling 提取参数 {'issue': '用户要求提供客服经理电话，表示要直接投诉客服经理', 'priority': 'P1'}；工具调用（建工单）：create_ticket(priority=P1) → 成功",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 4.0,
+    "faithfulness": 3.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "44",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": false,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "日常闲聊",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.32,
+    "answer": "这个真不行哦～退款金额得按实际订单来算，我随便编一个反而会误导你。你把订单号发我，我帮你查准确金额，或者直接引导你走退款流程，这样更靠谱～",
+    "route_note": "直接回复",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 8.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "45",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "创建工单",
+    "intent_actual": "创建工单",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": true,
+    "tool_detail": "Function Calling 提取参数 {'issue': '用户要求退款，并威胁若不退款将向法院起诉，情绪激烈，需人工介入处理', 'priority': 'P1'}；工具调用（建工单）：create_ticket(priority=P1) → 成功",
+    "reject_ok": null,
+    "latency": 0.77,
+    "answer": "非常抱歉给您带来了不好的体验，您的情况我已加急登记：\n\n- **工单号**：GD20260920010945\n- **优先级**：P1（24 小时内人工跟进）\n- **创建时间**：2026-09-20 01:09:45\n\n专属客服会优先处理您的工单，请您保持电话畅通，我们会第一时间与您联系。\n您可以在工单页面凭工单号查询处理进度。\n\n⚠️ *演示模式：工单未真实提交，仅供功能演示。*",
+    "route_note": "Function Calling 提取参数 {'issue': '用户要求退款，并威胁若不退款将向法院起诉，情绪激烈，需人工介入处理', 'priority': 'P1'}；工具调用（建工单）：create_ticket(priority=P1) → 成功",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 6.0,
+    "faithfulness": 4.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "46",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": false,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "创建工单",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 0.66,
+    "answer": "非常抱歉给您带来了不好的体验，您的情况我已加急登记：\n\n- **工单号**：GD20260920010945\n- **优先级**：P1（24 小时内人工跟进）\n- **创建时间**：2026-09-20 01:09:45\n\n专属客服会优先处理您的工单，请您保持电话畅通，我们会第一时间与您联系。\n您可以在工单页面凭工单号查询处理进度。\n\n⚠️ *演示模式：工单未真实提交，仅供功能演示。*",
+    "route_note": "Function Calling 提取参数 {'issue': '用户反馈快递丢失，认为是平台责任，要求先行赔付500元', 'priority': 'P1'}；工具调用（建工单）：create_ticket(priority=P1) → 成功",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 3.0,
+    "faithfulness": 3.0,
+    "retrieval_relevance": 0.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "47",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "查订单",
+    "intent_actual": "查订单",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": true,
+    "tool_detail": "Function Calling 提取参数 {'order_id': ''}；工具调用（查订单）：手机号查询→隐私拦截澄清",
+    "reject_ok": null,
+    "latency": 0.68,
+    "answer": "为了保护您的账户与隐私安全，暂不支持通过手机号查询订单。请在「我的订单」中找到订单号后发给我（演示环境可试用：2024001、2024002、2024003），我马上为您查询。",
+    "route_note": "Function Calling 提取参数 {'order_id': ''}；工具调用（查订单）：手机号查询→隐私拦截澄清",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 8.0,
+    "faithfulness": 5.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "48",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": false,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "日常闲聊",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.46,
+    "answer": "您好，我是小智～出于隐私保护，我没办法提供他人的手机号哦。如果您需要查询订单，建议让张三本人来联系我，或者您提供一下订单号，我帮您看看能不能查到相关信息～",
+    "route_note": "直接回复",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 5.0,
+    "faithfulness": 6.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "49",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "日常闲聊",
+    "intent_actual": "日常闲聊",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.49,
+    "answer": "这个问题可难倒我啦～我只是个智能客服助手，没有工资这个概念呢😄 如果您有业务方面的问题，随时告诉我，我帮您查询或办理哦！",
+    "route_note": "直接回复",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 8.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "50",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.667,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 2.14,
+    "answer": "目前资料里没有关于“公司内部价”的说明，我帮您转接人工客服确认一下。\n\n如果您想买得更划算，可以参考这些公开优惠：\n- 累计消费满 999 元升级黄金会员，全场 95 折；满 2999 元升级钻石会员，全场 92 折。\n- 商品签收后 7 天内，同规格商品在官方旗舰店降价可申请差价退还（以优惠券形式返还），但大促秒杀、限量特价商品不参与。\n- 消费 1 元积 1 分，评价晒单额外奖励 50-200 分，积分可在积分商城兑换配件和优惠券。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "你们公司内部价是多少？我想买便宜的"
+   },
+   "judge": {
+    "relevance": 5.0,
+    "faithfulness": 5.0,
+    "retrieval_relevance": 5.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "51",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.905,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.93,
+    "answer": "摔落变形属于人为损坏，不在免费保修范围内。如果签收在15天内且确认非人为，可以申请换货；如果是人为损坏或已过保，可以申请付费维修，检测费30元，维修费按故障报价收取。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "耳机摔坏了怎么办"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "52",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.958,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.95,
+    "answer": "下单时在“发票信息”里选择电子普票或纸质专票：\n\n- 电子普票：支付后 1 个工作日内发送至预留邮箱，也可在订单详情页自行下载。\n- 纸质专票：仅限企业用户，需提供营业执照和开票信息，确认后 5 个工作日内单独寄出，免运费。\n\n发票内容默认开具“智能硬件设备”明细，按实际购买商品分行列出，不支持开“办公用品”“礼品”等汇总类目。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "开发票怎么弄"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "53",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.941,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 2.04,
+    "answer": "退款到账时间按原支付方式区分：\n\n- 微信/支付宝：1-3 个工作日到账\n- 银行卡支付：3-7 个工作日到账\n- 花呗分期：优先冲抵剩余账单，已出账单的手续费不退\n\n如果超过 7 个工作日仍未到账，可以联系客服并提供退款单号核查。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "退款多久到账？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "54",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "查订单",
+    "intent_actual": "查订单",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": true,
+    "tool_detail": "Function Calling 提取参数 {'order_id': ''}；工具调用（查订单）：参数不足（order_id 缺失），主动澄清",
+    "reject_ok": null,
+    "latency": 0.72,
+    "answer": "好的，我来帮您查询订单。请提供您的订单号（演示环境可试用：2024001、2024002、2024003）。",
+    "route_note": "Function Calling 提取参数 {'order_id': ''}；工具调用（查订单）：参数不足（order_id 缺失），主动澄清",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 7.0,
+    "faithfulness": 6.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "55",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.933,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.74,
+    "answer": "先长按电源键 15 秒强制重启试试。如果没反应，可以在 App 里重新刷入固件包。要是仍然无法恢复，15 天内可换新，保修期内免费维修。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "手表黑屏了怎么办？"
+   },
+   "judge": {
+    "relevance": 7.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "56",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.905,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.95,
+    "answer": "退货流程如下：\n- 在“我的订单”中选择对应订单，点击“申请退货”；\n- 填写退货原因并上传相关凭证；\n- 审核通过后，按短信提示将商品寄回；\n- 仓库验收合格后，1-3个工作日内原路退款。\n\n另外，退货分7天无理由退货和15天内质量问题退货两类，不确定属于哪类时，可先在订单页提交申请，由仓库按验收结果判定。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "我要退货，退货流程是什么？"
+   },
+   "judge": {
+    "relevance": 8.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "57",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.66,
+    "answer": "在\"App-我的-设置-账号与安全-注销账号\"提交申请即可。注销前需结清全部订单售后，账号数据会在15天冷静期后永久删除且不可恢复。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "怎么注销账号？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "58",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 1.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.77,
+    "answer": "优惠券在结算页勾选抵扣，单笔订单限用 1 张；满减券不与其他活动叠加；优惠券不找零、不兑现，过期自动失效。退货时，整单退货会返还未过期的券，部分退货不返还。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "优惠券怎么用？"
+   },
+   "judge": {
+    "relevance": 10.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 10.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "59",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.737,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 1.97,
+    "answer": "订单取消分两种情况：\n\n- 未支付订单：下单后 30 分钟内未支付，系统会自动取消。\n- 已支付但未发货的订单：可以主动取消，取消后全额退款。\n\n如果订单已经发货，则无法直接取消，您可以选择拒收，商品退回仓库质检无误后 3 个工作日内原路退款，退货运费由您承担（质量问题除外）。\n\n目前资料里没有说明已支付未发货订单的具体取消入口，建议您在\"我的订单\"中查看该订单是否有取消按钮，或联系在线客服协助处理。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "怎么取消订单？"
+   },
+   "judge": {
+    "relevance": 5.0,
+    "faithfulness": 7.0,
+    "retrieval_relevance": 5.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "60",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "知识库咨询",
+    "doc_count": 5,
+    "fact_coverage": 0.697,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 2.74,
+    "answer": "积分减少通常和有效期有关：积分自获得当年起有效期为 2 年，过期会自动失效。另外，如果订单发生退货，对应的消费积分也可能被扣回。您方便提供订单号或积分变动的大致时间吗？我帮您具体核对一下。",
+    "route_note": "向量检索 → RAG 链",
+    "rewritten": "我的积分怎么少了？"
+   },
+   "judge": {
+    "relevance": 9.0,
+    "faithfulness": 10.0,
+    "retrieval_relevance": 8.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "61",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": true,
+    "intent_expected": "创建工单",
+    "intent_actual": "创建工单",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": true,
+    "tool_detail": "Function Calling 提取参数 {'issue': '用户反馈耳机再次损坏（\"你们这个破耳机又坏了\"），情绪不满，疑似产品质量问题，需人工跟进处理。', 'priority': 'P1'}；工具调用（建工单）：create_ticket(priority=P1) → 成功",
+    "reject_ok": null,
+    "latency": 0.88,
+    "answer": "非常抱歉给您带来了不好的体验，您的情况我已加急登记：\n\n- **工单号**：GD20260920011048\n- **优先级**：P1（24 小时内人工跟进）\n- **创建时间**：2026-09-20 01:10:48\n\n专属客服会优先处理您的工单，请您保持电话畅通，我们会第一时间与您联系。\n您可以在工单页面凭工单号查询处理进度。\n\n⚠️ *演示模式：工单未真实提交，仅供功能演示。*",
+    "route_note": "Function Calling 提取参数 {'issue': '用户反馈耳机再次损坏（\"你们这个破耳机又坏了\"），情绪不满，疑似产品质量问题，需人工跟进处理。', 'priority': 'P1'}；工具调用（建工单）：create_ticket(priority=P1) → 成功",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 5.0,
+    "faithfulness": 3.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "62",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": false,
+    "intent_expected": "日常闲聊",
+    "intent_actual": "创建工单",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 0.75,
+    "answer": "非常抱歉给您带来了不好的体验，您的情况我已加急登记：\n\n- **工单号**：GD20260920011048\n- **优先级**：P1（24 小时内人工跟进）\n- **创建时间**：2026-09-20 01:10:48\n\n专属客服会优先处理您的工单，请您保持电话畅通，我们会第一时间与您联系。\n您可以在工单页面凭工单号查询处理进度。\n\n⚠️ *演示模式：工单未真实提交，仅供功能演示。*",
+    "route_note": "Function Calling 提取参数 {'issue': '用户投诉客服长时间无人响应，情绪激动，要求人工处理', 'priority': 'P1'}；工具调用（建工单）：create_ticket(priority=P1) → 成功",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 3.0,
+    "faithfulness": 2.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "63",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": false,
+    "intent_expected": "知识库咨询",
+    "intent_actual": "创建工单",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 0.99,
+    "answer": "非常抱歉给您带来了不好的体验，您的情况我已加急登记：\n\n- **工单号**：GD20260920011048\n- **优先级**：P1（24 小时内人工跟进）\n- **创建时间**：2026-09-20 01:10:48\n\n专属客服会优先处理您的工单，请您保持电话畅通，我们会第一时间与您联系。\n您可以在工单页面凭工单号查询处理进度。\n\n⚠️ *演示模式：工单未真实提交，仅供功能演示。*",
+    "route_note": "Function Calling 提取参数 {'issue': '用户情绪激动，表示要退货（\"太气人了这破东西，我要退货\"），需人工跟进处理退货诉求', 'priority': 'P1'}；工具调用（建工单）：create_ticket(priority=P1) → 成功",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 3.0,
+    "faithfulness": 2.0,
+    "retrieval_relevance": 0.0,
+    "judge_err": null
+   }
+  },
+  {
+   "sid": "64",
+   "config": "G01_基线_向量_k5_无精排",
+   "error": null,
+   "hard": {
+    "intent_ok": false,
+    "intent_expected": "日常闲聊",
+    "intent_actual": "创建工单",
+    "doc_count": 0,
+    "fact_coverage": 0.0,
+    "fallback_triggered": false,
+    "tool_ok": null,
+    "tool_detail": null,
+    "reject_ok": null,
+    "latency": 0.91,
+    "answer": "非常抱歉给您带来了不好的体验，您的情况我已加急登记：\n\n- **工单号**：GD20260920011048\n- **优先级**：P1（24 小时内人工跟进）\n- **创建时间**：2026-09-20 01:10:48\n\n专属客服会优先处理您的工单，请您保持电话畅通，我们会第一时间与您联系。\n您可以在工单页面凭工单号查询处理进度。\n\n⚠️ *演示模式：工单未真实提交，仅供功能演示。*",
+    "route_note": "Function Calling 提取参数 {'issue': '用户投诉客服机器人无用，询问问题均无法解答，表达不满', 'priority': 'P1'}；工具调用（建工单）：create_ticket(priority=P1) → 成功",
+    "rewritten": ""
+   },
+   "judge": {
+    "relevance": 4.0,
+    "faithfulness": 1.0,
+    "retrieval_relevance": -1.0,
+    "judge_err": null
+   }
+  }
+ ]
+}

@@ -1,0 +1,55 @@
+# =========================================================
+# 离线 Docker 部署编排（配合 scripts/docker_export.sh 生成的部署包使用）
+#
+# 与 docker-compose.yml 的区别：
+#   - app 服务不 build，直接使用已导出的镜像 rag-cs-agent:latest
+#   - 无 ollama-init 服务（bge-m3 模型已随 docker_data/ollama 打包，无需联网拉取）
+#   - 完全离线可用
+#
+# 启动：./start.sh
+# 访问：http://localhost:8501
+# =========================================================
+services:
+  # ---------------- 应用 ----------------
+  app:
+    image: rag-cs-agent:latest
+    container_name: smart-cs-bot
+    ports:
+      - "8501:8501"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - HF_ENDPOINT=https://hf-mirror.com
+      - CHAT_DB_FILE=/app/persistent/chat_history.db
+      - MODEL_CONFIG_PATH=/app/persistent/config.yaml
+    # API Key 从部署包根 .env 注入；文件不存在时跳过
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./chroma_db:/app/chroma_db
+      - ./models:/app/models
+      - ./docs:/app/docs
+      - ./logs:/app/logs
+      - ./config.yaml:/app/persistent/config.yaml
+      - ./chat_history.db:/app/persistent/chat_history.db
+    depends_on:
+      ollama:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ---------------- Ollama 服务（嵌入 bge-m3 + 聊天 qwen2.5:1.5b） ----------------
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      # 模型文件随部署包一起拷贝，离线可用
+      - ./docker_data/ollama:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped

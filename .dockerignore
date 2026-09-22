@@ -1,0 +1,45 @@
+# ---------- Python ----------
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# ---------- 版本控制 / IDE ----------
+.git/
+.gitignore
+.trae/
+.vscode/
+.idea/
+
+# ---------- 敏感配置（API Key 只通过 .env / 环境变量注入，不进镜像） ----------
+.env
+.env.*
+!.env.example
+config.yaml
+.streamlit/secrets.toml
+user_settings.local.json
+# ---------- 个人杂项（不进镜像） ----------
+项目进度记事本.md
+
+# ---------- 运行时数据（compose 以 bind mount 方式提供，不打进镜像层） ----------
+docker_data/
+docker_deploy/
+chroma_db/
+chroma_db_corrupted_backup/
+chroma_eval/
+models/
+docs/
+logs/
+*.log
+*.db
+eval_experiments.json
+
+# ---------- 测试与杂项 ----------
+tests/
+_probe_consistency.py
+*.bak
+*.backup
+*.orig
+.DS_Store
+Thumbs.db

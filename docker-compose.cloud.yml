@@ -1,0 +1,21 @@
+# ============================================================
+# 云端 API 模式 override（与 docker-compose.yml 叠加使用）
+#
+#   docker compose -f docker-compose.yml -f docker-compose.cloud.yml up -d --build
+#
+# 效果：不启动 Ollama 容器，聊天/嵌入模型走云端 API
+# （API Key 在 .env 配置，模型来源在应用「模型设置」页切换）。
+# 需 Docker Compose v2.24+（!reset 标签；随 2024 年中以后的 Docker Desktop 自带）
+# ============================================================
+services:
+  app:
+    # 清除基础文件中对 ollama 的健康等待（云端模式无该容器）
+    depends_on: !reset null
+
+  ollama:
+    # 基础文件中无 profile（默认启用）；override 后归入 local profile。
+    # cloud 启动命令不激活 local profile，因此该服务被忽略。
+    profiles: ["local"]
+
+  ollama-init:
+    profiles: ["local"]
