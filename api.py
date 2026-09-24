@@ -23,16 +23,17 @@ load_dotenv()  # .env 须在 core.model_factory 导入前加载（导入时读�
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 # ---------- 项目模块 ----------
 from core.retrieval import (
     set_vectorstore, do_retrieve, rerank_docs, format_docs,
-    get_kb_sources, set_rerank_model,
+    get_kb_sources, set_rerank_model, dense_top_confidence,
 )
 from core.database import (
     db_create_conversation, db_save_message, db_load_messages,
     db_list_conversations, db_delete_conversation, build_history_text,
+    _conv_id_by_token,
 )
 from core.prompts import rewrite_prompt, answer_prompt, intent_prompt, route_prompt
 from core.tools import ALL_TOOLS, create_ticket_record, query_order_status
@@ -128,6 +129,7 @@ async def lifespan(app: FastAPI):
         "chitchat_chain": chitchat_chain,
         "do_retrieve": do_retrieve,
         "rerank_docs": rerank_docs,
+        "dense_top_confidence": dense_top_confidence,
         "format_docs": format_docs,
         "intent_names": INTENT_NAMES,
         "logger": logger,
@@ -242,6 +244,37 @@ class ChatRequest(BaseModel):
     confidence_threshold: float = 0.5
     sources: list[str] | None = None  # 检索范围（None=全库）
 
+    # 入参前置校验：非法请求在调用 LLM/检索前直接 422 拒绝，不烧 token、不产生半截会话
+    @field_validator("question")
+    @classmethod
+    def _question_not_blank(cls, v: str) -> str:
+        if not v or not v.strip():
+            raise ValueError("问题不能为空")
+        if len(v) > 4000:
+            raise ValueError("问题长度不能超过 4000 字")
+        return v
+
+    @field_validator("top_k")
+    @classmethod
+    def _top_k_range(cls, v: int) -> int:
+        if not 1 <= v <= 20:
+            raise ValueError("top_k 取值范围为 1~20")
+        return v
+
+    @field_validator("similarity_threshold", "confidence_threshold")
+    @classmethod
+    def _threshold_range(cls, v: float) -> float:
+        if not 0.0 <= v <= 1.0:
+            raise ValueError("阈值取值范围为 0.0~1.0")
+        return v
+
+    @field_validator("retrieval_mode")
+    @classmethod
+    def _retrieval_mode_allowed(cls, v: str) -> str:
+        if v not in ("向量检索", "关键词检索", "关键词", "混合检索"):
+            raise ValueError("retrieval_mode 非法")
+        return v
+
 
 class ChatResponse(BaseModel):
     conv_id: str
@@ -338,6 +371,12 @@ def chat(req: ChatRequest):
     # 会话管理
     if req.conv_id is None:
         req.conv_id = db_create_conversation(req.question[:20])
+    elif _conv_id_by_token(req.conv_id) is None:
+        # 假会话号（不存在或已删除）：在调用 Agent 前直接拒绝，避免跑完 LLM 才落库失败、白烧 token
+        raise HTTPException(
+            status_code=404,
+            detail="会话不存在或已删除；请不传 conv_id 以自动创建新会话",
+        )
 
     # 加载历史
     history_messages = db_load_messages(req.conv_id)

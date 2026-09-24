@@ -282,12 +282,16 @@ def run_chain_eval_single(deps: dict, question: str, expected_intent: str,
     # 检索节点
     retrieve_status = None
     retrieve_detail = ""
+    # 精排降级时文档无真实 rerank_score（默认 0，严禁当满分），单独取标记用于状态判定
+    rerank_degraded = bool(docs and docs[0].metadata.get("_rerank_degraded"))
     top_score = float(docs[0].metadata.get("rerank_score", 0)) if docs else 0.0
     if "rag_retrieve" in node_names:
         if "检索异常" in route_note:
             retrieve_status, retrieve_detail = "error", "检索服务异常"
         elif "无命中" in route_note:
             retrieve_status, retrieve_detail = "error", "知识库无命中"
+        elif rerank_degraded:
+            retrieve_status, retrieve_detail = "warn", "精排服务不可用，已降级原始排序（rerank 分数不可信）"
         elif "置信度兜底" in route_note:
             retrieve_status, retrieve_detail = "warn", f"置信度兜底（最高相关性 {top_score:.0%}）"
         else:
@@ -340,6 +344,8 @@ def run_chain_eval_single(deps: dict, question: str, expected_intent: str,
         attribution = "改写节点：改写失败已降级原问题"
     elif retrieve_status == "error" and "无命中" in retrieve_detail:
         attribution = "检索节点：知识库无命中"
+    elif retrieve_status == "warn" and "精排" in retrieve_detail:
+        attribution = "检索节点：精排服务降级（rerank 未生效，分数不可信）"
     elif retrieve_status == "warn":
         attribution = "检索节点：置信度兜底"
     elif tool_status == "warn" and "澄清" in tool_detail:

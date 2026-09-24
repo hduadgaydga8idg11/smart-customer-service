@@ -3,7 +3,7 @@
 # =========================================================
 import streamlit as st
 
-from 智能客服助手 import get_runtime, _build_runtime, logger, LOG_DIR
+from 智能客服助手 import get_runtime, _build_runtime, logger, LOG_DIR, inject_subpage_style
 from core.model_factory import (
     LOCAL_CHAT_MODEL, LOCAL_EMBEDDING_MODEL, OLLAMA_BASE_URL,
     CHAT_PRESETS, EMBEDDING_PRESETS,
@@ -19,20 +19,22 @@ from core.model_factory import (
 from core.retrieval import rebuild_knowledge_base, RERANK_MODEL_OPTIONS
 
 st.set_page_config(page_title="模型设置", page_icon="🧠", layout="wide")
+inject_subpage_style()
 st.title("🧠 模型设置")
 
 
-def _render_api_key_status(provider: str, input_state_key: str) -> None:
-    """展示 Key 状态：输入框有新值（未生效） vs 已生效 Key 的来源（会话 / .env 全局）。"""
+def _render_api_key_status(provider: str, input_state_key: str, kind: str) -> None:
+    """展示 Key 状态：输入框有新值（未生效） vs 已生效 Key 的来源（会话 / .env 全局）。
+    kind="chat"/"embedding"：聊天与嵌入的 Key 槽位相互独立（都选「自定义」也不串用）。"""
     _typed = (st.session_state.get(input_state_key) or "").strip()
     if _typed:
         st.caption("⚠️ 输入框中的新 Key **尚未生效**：点「测试连接」即用它验证，点「保存并生效」后本次会话内使用（不落盘）。")
         return
-    _saved = resolve_api_key(provider)
+    _saved = resolve_api_key(provider, kind=kind)
     if not _saved:
-        st.caption("尚未配置 Key：粘贴你的 Key 后点「保存并生效」（仅本次会话使用，不落盘；长期使用请配置到 .env）。")
+        st.caption("尚未配置 Key：粘贴你的 Key 后点「保存并生效」（仅本次会话使用，不落盘；长期使用请在 .env 配置）。")
         return
-    _src = api_key_source(provider)
+    _src = api_key_source(provider, kind=kind)
     if _src == "session":
         _label = "本次会话临时输入"
     else:
@@ -109,7 +111,7 @@ with _col_chat:
                 key=_c_input_key,
                 help="粘贴你的 Key 后点「测试连接」验证、点「保存并生效」本次会话内生效（不落盘）；长期使用请在 .env 配置。留空则沿用当前生效的 Key。",
             )
-            _render_api_key_status(_c_prov, _c_input_key)
+            _render_api_key_status(_c_prov, _c_input_key, "chat")
 
 with _col_emb:
     with st.container(border=True):
@@ -166,7 +168,7 @@ with _col_emb:
                 key=_e_input_key,
                 help="粘贴你的 Key 后点「测试连接」验证、点「保存并生效」本次会话内生效（不落盘）；长期使用请在 .env 配置。留空则沿用当前生效的 Key。",
             )
-            _render_api_key_status(_e_prov, _e_input_key)
+            _render_api_key_status(_e_prov, _e_input_key, "embedding")
             st.caption("⚠️ 不同向量空间切换后需重建知识库")
 
 # =========================================================
@@ -180,11 +182,11 @@ if _do_test:
     if _new_chat.get("source") == "api":
         _tk = st.session_state.get(f"cfg_chat_key_{_new_chat.get('provider', '')}")
         if _tk:
-            set_session_api_key(_new_chat["provider"], _tk)
+            set_session_api_key(_new_chat["provider"], _tk, kind="chat")
     if _new_emb.get("source") == "api":
         _ek = st.session_state.get(f"cfg_emb_key_{_new_emb.get('provider', '')}")
         if _ek:
-            set_session_api_key(_new_emb["provider"], _ek)
+            set_session_api_key(_new_emb["provider"], _ek, kind="embedding")
     with st.spinner("测试聊天模型..."):
         _okc, _msgc = test_chat_connection({**_cfg, "chat": _new_chat})
     (st.success if _okc else st.error)(f"💬 {_msgc}")
@@ -196,11 +198,11 @@ if _do_save:
     if _new_chat.get("source") == "api":
         _tk = st.session_state.get(f"cfg_chat_key_{_new_chat.get('provider', '')}")
         if _tk:
-            set_session_api_key(_new_chat["provider"], _tk)
+            set_session_api_key(_new_chat["provider"], _tk, kind="chat")
     if _new_emb.get("source") == "api":
         _ek = st.session_state.get(f"cfg_emb_key_{_new_emb.get('provider', '')}")
         if _ek:
-            set_session_api_key(_new_emb["provider"], _ek)
+            set_session_api_key(_new_emb["provider"], _ek, kind="embedding")
     _new_cfg = {**_cfg, "chat": _new_chat, "embedding": _new_emb}
     try:
         if _new_chat["source"] == "api":

@@ -185,7 +185,20 @@ def build_agent_graph(deps: dict[str, Any]):
         if rerank_on and docs:
             docs = rerank_docs(rewritten, docs, top_k)
             trace.append("Rerank精排")
-            top_score = float(docs[0].metadata.get("rerank_score", 1.0)) if docs else 0.0
+            # 精排降级（模型加载/推理失败，rerank_docs 返回原始排序并打 _rerank_degraded 标记）：
+            # 此时没有真实相关性分数，严禁按缺失分 1.0 当满分放行，否则垃圾资料会绕过置信度兜底。
+            rerank_degraded = bool(docs[0].metadata.get("_rerank_degraded"))
+            if rerank_degraded:
+                trace.append("精排降级")
+                logger.warning(
+                    f"[Graph] Rerank 精排未生效（已降级原始排序），改用向量置信度复核 "
+                    f"question={question[:50]}"
+                )
+                # 置 0 分强制进入下方双信号门：向量强命中可放行，否则转人工兜底；全程留痕
+                top_score = 0.0
+                route_note += " → 精排降级(原始排序)"
+            else:
+                top_score = float(docs[0].metadata.get("rerank_score", 1.0)) if docs else 0.0
             if (
                 docs
                 and state.get("confidence_fallback_enabled", False)

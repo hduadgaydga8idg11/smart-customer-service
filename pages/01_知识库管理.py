@@ -7,7 +7,7 @@
 import streamlit as st
 from pathlib import Path
 
-from 智能客服助手 import get_runtime, logger
+from 智能客服助手 import get_runtime, logger, inject_subpage_style
 from core.retrieval import (
     MAX_FILE_SIZE_MB,
     calculate_file_hash,
@@ -27,6 +27,7 @@ from core.retrieval import (
 from core.model_factory import kb_compatibility
 
 st.set_page_config(page_title="知识库管理", page_icon="📚", layout="wide")
+inject_subpage_style()
 st.title("📚 知识库管理")
 st.caption("上传文档 → 预览切分效果 → 确认后向量化入库；入库文档自动参与对话页检索")
 

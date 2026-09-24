@@ -54,7 +54,11 @@ st.set_page_config(page_title="评测系统", page_icon="🧪", layout="wide")
 st.markdown(
     """
     <style>
-      .stApp { background: #f8fafc; }
+      /* 与主页/其他子页面一致：隐藏默认菜单、页脚、Deploy 入口，统一背景色 */
+      #MainMenu { visibility: hidden; }
+      footer { visibility: hidden; }
+      header { visibility: hidden; }
+      .stApp { background-color: #F8F9FA; }
       .metric-card {
         background: #fff; border: 1px solid #e2e8f0; border-radius: 8px;
         padding: 12px 14px; margin-bottom: 6px;
@@ -345,11 +349,14 @@ def run_eval_single(question: str, ground_truth: str, mode: str,
     except Exception as e:
         result["error"] = f"改写失败: {e}"
         result["rewritten"] = question
+    rerank_degraded = False
     try:
         docs = _retrieve(result["rewritten"], top_k=rerank_candidate_k if rerank_on else top_k,
                          similarity_threshold=similarity_threshold, retrieval_mode=mode)
         if rerank_on and docs:
             docs = rerank_docs(result["rewritten"], docs, top_k)
+            # 精排服务失败时返回原始排序并打降级标记：没有真实分数，不能当满分
+            rerank_degraded = bool(docs[0].metadata.get("_rerank_degraded"))
         result["docs"] = docs
         result["doc_count"] = len(docs)
     except Exception as e:
@@ -358,7 +365,11 @@ def run_eval_single(question: str, ground_truth: str, mode: str,
     result["retrieval_time"] = round(time.time() - start_time, 3)
     fallback_triggered = False
     if rerank_on and docs and fallback_on:
-        top_score = float(docs[0].metadata.get("rerank_score", 1.0)) if docs else 0.0
+        # 降级时无真实 rerank 分，按 0 分处理：强制进入兜底判定，避免垃圾资料被当高相关放行
+        top_score = 0.0 if rerank_degraded else float(docs[0].metadata.get("rerank_score", 1.0))
+        if rerank_degraded:
+            result["error"] = ((result["error"] + " | ") if result["error"] else "") + \
+                "精排服务不可用已降级原始排序（rerank 分数不可信，按未精排判定）"
         if top_score < fallback_th:
             fallback_triggered = True
             result["fallback"] = True

@@ -1,2 +1,4 @@
 [theme]
 base = "light"
+# 企业蓝主色：主按钮/链接/选中态（替代 Streamlit 默认红 #FF4B4B，避免保存类按钮像删除/警告）
+primaryColor = "#1d4ed8"

@@ -87,6 +87,25 @@ PROJECT_ROOT = Path(__file__).parent.resolve()
 DB_PATH = str(PROJECT_ROOT / "chroma_db")  # 使用项目根目录下的绝对路径
 
 # =========================================================
+# 子页面统一外观（pages/ 各页 import 后显式调用 inject_subpage_style）
+# 主页的 <style> 写在 main() 内、子页面 import 复用时执行不到；
+# 公共规则集中于此：隐藏 Streamlit 默认菜单/页脚/Deploy 入口，背景色与主页一致
+# =========================================================
+SUBPAGE_CSS = """
+<style>
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
+header { visibility: hidden; }
+.stApp { background-color: #F8F9FA; }
+</style>
+"""
+
+
+def inject_subpage_style() -> None:
+    """子页面注入统一外观：隐藏默认菜单/Deploy/页脚，背景色与主页对齐。"""
+    st.markdown(SUBPAGE_CSS, unsafe_allow_html=True)
+
+# =========================================================
 # 1. 页面配置
 # =========================================================
 if __name__ == "__main__":

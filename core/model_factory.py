@@ -286,38 +286,66 @@ def update_kb_space(space: str) -> None:
 #   优先级：本次会话临时输入 > .env/环境变量（全局兜底）
 #   - 会话级：set_session_api_key，仅当前进程、不落盘（多用户部署下防止
 #     互相用对方 Key 计费；长期使用请配置到 .env）
+#   - 用途隔离：kind="chat"/"embedding" 区分用途。聊天和嵌入即使都选
+#     「自定义」并指向两个不同的兼容端点，Key 也分别存放、互不覆盖；
+#     查不到用途专属 Key 时回退厂商共享槽（同一厂商只填一个 Key 仍两边生效）
 # =========================================================
-_session_key_overrides: dict[str, str] = {}  # provider -> key（仅本次运行）
+_session_key_overrides: dict[str, str] = {}  # 键："chat:厂商" / "embedding:厂商"，兼容旧键 "厂商"
 
 
-def api_key_env_name(provider: str) -> str:
-    return CHAT_PRESETS.get(provider, EMBEDDING_PRESETS.get(provider, {})).get(
+def _session_slot(provider: str, kind: str | None) -> str:
+    """会话 Key 槽位：带用途时为 'chat:厂商' / 'embedding:厂商'，否则为厂商共享槽。"""
+    return f"{kind}:{provider}" if kind else provider
+
+
+def api_key_env_name(provider: str, kind: str | None = None) -> str:
+    base = CHAT_PRESETS.get(provider, EMBEDDING_PRESETS.get(provider, {})).get(
         "api_key_env", "OPENAI_COMPAT_API_KEY"
     )
+    # 「自定义」可能同时指向两个不同的 OpenAI 兼容端点：允许按用途各配一个 Key
+    # （OPENAI_COMPAT_CHAT_API_KEY / OPENAI_COMPAT_EMBED_API_KEY）；
+    # 未设置细分变量时回退共享变量 OPENAI_COMPAT_API_KEY
+    if provider == "自定义" and kind in ("chat", "embedding"):
+        specific = f"OPENAI_COMPAT_{kind.upper()}_API_KEY"
+        if (os.environ.get(specific) or "").strip():
+            return specific
+    return base
 
 
-def resolve_api_key(provider: str) -> str:
-    """按优先级解析该厂商的 Key：会话临时 > .env/环境变量。
+def resolve_api_key(provider: str, kind: str | None = None) -> str:
+    """按优先级解析该厂商的 Key：用途专属会话槽 > 厂商共享会话槽 > .env/环境变量。
     Key 一律不落盘（多用户部署下防止互相用对方 Key 计费）；长期使用请配置到 .env。"""
     return (
-        _session_key_overrides.get(provider)
-        or (os.environ.get(api_key_env_name(provider)) or "").strip()
+        _session_key_overrides.get(_session_slot(provider, kind))
+        or _session_key_overrides.get(provider)
+        or (os.environ.get(api_key_env_name(provider, kind)) or "").strip()
     )
 
 
-def api_key_source(provider: str) -> str:
+def api_key_source(provider: str, kind: str | None = None) -> str:
     """返回当前生效 Key 的来源：session（会话临时）/ env（.env 全局）/ 空"""
+    if _session_key_overrides.get(_session_slot(provider, kind)):
+        return "session"
     if _session_key_overrides.get(provider):
         return "session"
-    if (os.environ.get(api_key_env_name(provider)) or "").strip():
+    if (os.environ.get(api_key_env_name(provider, kind)) or "").strip():
         return "env"
     return ""
 
 
-def set_session_api_key(provider: str, key: str) -> None:
-    """页面临时输入的 Key 放入进程内覆盖表（仅本次运行有效，不写盘、不污染环境变量）"""
+def set_session_api_key(provider: str, key: str, kind: str | None = None) -> None:
+    """页面临时输入的 Key 放入用途专属槽（仅本次运行有效，不写盘、不污染环境变量）。
+
+    - 「自定义」：只写用途槽（chat:自定义 / embedding:自定义），聊天与嵌入可能指向
+      两个不同的兼容端点，后填的绝不覆盖先填的；
+    - 预设厂商（阿里/硅基等，同一账号 Key 聊天嵌入通用）：同步写厂商共享槽，
+      另一侧输入框留空时可沿用同一个 Key。
+    """
     key = (key or "").strip()
-    if key:
+    if not key:
+        return
+    _session_key_overrides[_session_slot(provider, kind)] = key
+    if kind and provider != "自定义":
         _session_key_overrides[provider] = key
 
 
@@ -339,7 +367,7 @@ def build_chat_model(cfg: dict, api_key: str | None = None):
         if not base_url:
             raise RuntimeError("Base URL 不能为空，请填写 API 服务地址")
         # 优先用调用方传入的 key（多用户各自填自己的 key），否则读环境变量
-        key = (api_key or "").strip() or resolve_api_key(provider)
+        key = (api_key or "").strip() or resolve_api_key(provider, kind="chat")
         if not key:
             raise RuntimeError(
                 f"未配置 API Key：请填写你的 API Key，或在 .env 中设置 {preset['api_key_env']}"
@@ -375,7 +403,7 @@ def build_embeddings(cfg: dict):
         model = (emb.get("model") or "").strip() or preset["default_model"]
         if not base_url:
             raise RuntimeError("Base URL 不能为空，请填写 API 服务地址")
-        key = resolve_api_key(provider)
+        key = resolve_api_key(provider, kind="embedding")
         if not key:
             raise RuntimeError(
                 f"未配置 API Key：请在 .env 中设置 {preset['api_key_env']}，"
