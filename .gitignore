@@ -18,6 +18,9 @@ logs/
 *.log
 chat_history.db
 eval_experiments.json
+# 评测运行目录：防止以后新产生的评测中间数据（可能含真实客户会话/题面）被误入库。
+# 注意：历史已跟踪的脱敏文件保留在库中作为评测体系佐证；对已跟踪文件的修改仍会在 git status 显示
+eval_runs/
 # config.yaml：本地模型配置（含厂商/base_url 等本地环境信息，不入库）
 config.yaml
 
